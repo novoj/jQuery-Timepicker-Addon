@@ -265,9 +265,9 @@ $.extend(Timepicker.prototype, {
 			// Added by Peter Medeiros:
 			// - Figure out what the hour/minute/second max should be based on the step values.
 			// - Example: if stepMinute is 15, then minMax is 45.
-			hourMax = (o.hourMax - (o.hourMax % o.stepHour)).toFixed(0),
-			minMax  = (o.minuteMax - (o.minuteMax % o.stepMinute)).toFixed(0),
-			secMax  = (o.secondMax - (o.secondMax % o.stepSecond)).toFixed(0),
+			hourMax = (o.hourMax - ((o.hourMax - o.hourMin) % o.stepHour)).toFixed(0),
+            minMax  = (o.minuteMax - ((o.minuteMax - o.minuteMin) % o.stepMinute)).toFixed(0),
+            secMax  = (o.secondMax - ((o.secondMax - o.secondMin) % o.stepSecond)).toFixed(0),
 			dp_id = this.inst.id.toString().replace(/([^A-Za-z0-9_])/g, '');
 
 		// Prevent displaying twice
@@ -285,7 +285,7 @@ $.extend(Timepicker.prototype, {
 				minuteGridSize = 0,
 				secondGridSize = 0,
 				size;
- 
+
 			if (o.showHour && o.hourGrid > 0) {
 				html += '<dd class="ui_tpicker_hour">' +
 						'<div id="ui_tpicker_hour_' + dp_id + '"' + ((o.showHour)   ? '' : noDisplay) + '></div>' +
@@ -586,9 +586,9 @@ $.extend(Timepicker.prototype, {
 		}
 
 		if(adjustSliders !== undefined && adjustSliders === true){
-			var hourMax = (this._defaults.hourMax - (this._defaults.hourMax % this._defaults.stepHour)).toFixed(0),
-				minMax  = (this._defaults.minuteMax - (this._defaults.minuteMax % this._defaults.stepMinute)).toFixed(0),
-				secMax  = (this._defaults.secondMax - (this._defaults.secondMax % this._defaults.stepSecond)).toFixed(0);
+			var hourMax = (this._defaults.hourMax - ((this._defaults.hourMax - this._defaults.hourMin) % this._defaults.stepHour)).toFixed(0),
+                minMax  = (this._defaults.minuteMax - ((this._defaults.minuteMax - this._defaults.minuteMin) % this._defaults.stepMinute)).toFixed(0),
+                secMax  = (this._defaults.secondMax - ((this._defaults.secondMax - this._defaults.secondMin) % this._defaults.stepSecond)).toFixed(0);
 
 			if(this.hour_slider)
 				this.hour_slider.slider("option", { min: this._defaults.hourMin, max: hourMax }).slider('value', this.hour);
